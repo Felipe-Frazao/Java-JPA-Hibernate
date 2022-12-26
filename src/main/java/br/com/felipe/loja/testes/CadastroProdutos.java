@@ -6,21 +6,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.felipe.loja.dao.ProdutoDao;
 import br.com.felipe.loja.modelo.Produto;
+import br.com.felipe.loja.util.ConexaoUtil;
 
 public class CadastroProdutos {
 
 	public static void main(String[] args) {
 		
-		Produto celular = new Produto("Xiaomi", "Celular com muitas utilidades", new BigDecimal("1080"));
+		Produto computador = new Produto("Positivo", "8gb de memoria, SSD, I5", new BigDecimal("1080"));
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("loja");// a string e o nome do <persistence-unit>
-		EntityManager em = factory.createEntityManager();
+		
+		EntityManager em = ConexaoUtil.getEntityManager(); 
+		ProdutoDao dao = new ProdutoDao(em);
 		
 		em.getTransaction().begin();//inicia a transacao
-		em.persist(celular);//serve para persistir, salvar e inserir um registro no banco de dados
+		dao.cadastrar(computador); //serve para persistir, salvar e inserir um registro no banco de dados
 		em.getTransaction().commit();//commita a acao
 		em.close(); //fecha a conexao
 	}
-
+		
 }
