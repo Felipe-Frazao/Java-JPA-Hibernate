@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity // Uma entidade JPA funciona como um espelho de uma tabela no banco de dados
@@ -23,15 +24,16 @@ public class Produto {
 	private BigDecimal preco;
 	private LocalDate data = LocalDate.now();
 	
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	private Categoria categoria;
 
 	Produto(){} //deve ser adicionado um construtor vazio
 	
-	public Produto(String produto, String descricao, BigDecimal preco) {
+	public Produto(String produto, String descricao, BigDecimal preco, Categoria categoria) {
 		this.nome = produto;
 		this.descricao = descricao;
 		this.preco = preco;
+		this.categoria = categoria;
 	}
 
 	public long getId() {
